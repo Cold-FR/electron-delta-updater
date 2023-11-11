@@ -461,7 +461,7 @@ class DeltaUpdater extends EventEmitter {
       return;
     }
 
-    const deltaURL = this.getDeltaURL({ deltaPath: deltaDetails.path });
+    const deltaURL = this.getDeltaURL({ deltaPath: deltaDetails.path.replace(/\s/g, '.') });
     this.logger.info('[Updater] Delta URL ', deltaURL);
 
     const shaVal = deltaDetails.sha256;
