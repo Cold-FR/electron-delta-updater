@@ -55,28 +55,28 @@
 
       switch (eventName) {
         case 'checking-for-update':
-          statusDom.textContent = "Checking for update...";
+          statusDom.textContent = "Recherche de mise à jour...";
           break;
         case 'update-available':
-          statusDom.textContent = "Starting download...";
+          statusDom.textContent = "Début du téléchargement...";
           progressBar.style.display = 'block';
           break;
         case 'update-not-available':
-          statusDom.textContent = "Starting app...";
+          statusDom.textContent = "Lancement de l'application...";
           break;
         case 'error':
-          statusDom.textContent = "Something went wrong!";
+          statusDom.textContent = "Une erreur est survenue.";
           break;
         case 'download-progress':
           const { percentage, transferred, total } = payload;
           progressBar.value = percentage;
-          statusDom.textContent = `Downloading ${percentage}% | ${transferred} / ${total}`;
+          statusDom.textContent = `Téléchargement ${percentage}% | ${transferred} / ${total}`;
           break;
         case 'update-downloaded':
-          statusDom.textContent = "Installing...";
+          statusDom.textContent = "Installation...";
           break;
         default:
-          statusDom.textContent = "Starting app...";
+          statusDom.textContent = "Lancement de l'application...";
       }
     });
 
