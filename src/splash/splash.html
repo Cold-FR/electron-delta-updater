@@ -1,86 +1,100 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delta Updater</title>
-  <style>
-    html,
-    body {
-      background: #2f3542;
-      font-family: "Maison Neue", sans-serif;
-      font-size: 16px;
-      line-height: 24px;
-      color: #f1f2f6;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta Updater</title>
+    <style>
+        html,
+        body {
+            background: transparent;
+            font-family: "Ubuntu Condensed", sans-serif;
+            font-size: 16px;
+            line-height: 24px;
+            color: #000;
+            overflow: hidden;
+        }
 
-    #container {
-      position: absolute;
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      left: 50%;
-      top: 50%;
-      padding: 10px;
-      transform: translate(-50%, -50%);
-    }
+        body.dark {
+            color: #d4d4d4;
+        }
 
-    #status {
-      line-height: 20px;
-      margin-bottom: 8px;
-    }
+        #container {
+            position: absolute;
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            left: 50%;
+            top: 50%;
+            padding: 10px;
+            transform: translate(-50%, -50%);
+        }
 
-  </style>
+        #logo {
+            width: 146px;
+            height: 58px;
+            margin-bottom: 20px;
+            background-image: url('./logo_city_white.png');
+        }
+
+        .dark #logo {
+            background-image: url('./logo_city_black.png') !important;
+        }
+
+        #status {
+            line-height: 20px;
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 
 <body style="-webkit-app-region: drag">
-  <div id="container">
-    <div id="status">Checking for update</div>
+<div id="container">
+    <div id="logo"></div>
+    <div id="status">Recherche de mise à jour...</div>
     <progress id="progressBar" max="100" value="0" style="display: none;"></progress>
-  </div>
-  <script>
+</div>
+<script>
     const MAIN_MESSAGE = '@electron-delta/updater:main';
     const statusDom = document.getElementById("status");
     const progressBar = document.getElementById("progressBar");
 
     window.addEventListener(MAIN_MESSAGE, (event) => {
-      const data = event.detail;
-      const { eventName, payload } = data;
+        const data = event.detail;
+        const {eventName, payload} = data;
 
-      switch (eventName) {
-        case 'checking-for-update':
-          statusDom.textContent = "Recherche de mise à jour...";
-          break;
-        case 'update-available':
-          statusDom.textContent = "Début du téléchargement...";
-          progressBar.style.display = 'block';
-          break;
-        case 'update-not-available':
-          statusDom.textContent = "Lancement de l'application...";
-          break;
-        case 'error':
-          statusDom.textContent = "Une erreur est survenue.";
-          break;
-        case 'download-progress':
-          const { percentage, transferred, total } = payload;
-          progressBar.value = percentage;
-          statusDom.textContent = `Téléchargement ${percentage}% | ${transferred} / ${total}`;
-          break;
-        case 'update-downloaded':
-          statusDom.textContent = "Installation...";
-          break;
-        default:
-          statusDom.textContent = "Lancement de l'application...";
-      }
+        switch (eventName) {
+            case 'checking-for-update':
+                statusDom.textContent = "Recherche de mise à jour...";
+                break;
+            case 'update-available':
+                statusDom.textContent = "Début du téléchargement...";
+                progressBar.style.display = 'block';
+                break;
+            case 'update-not-available':
+                statusDom.textContent = "Lancement de l'application...";
+                break;
+            case 'error':
+                statusDom.textContent = "Une erreur est survenue.";
+                break;
+            case 'download-progress':
+                const {percentage, transferred, total} = payload;
+                progressBar.value = percentage;
+                statusDom.textContent = `Téléchargement ${percentage}% | ${transferred} / ${total}`;
+                break;
+            case 'update-downloaded':
+                statusDom.textContent = "Installation...";
+                break;
+            default:
+                statusDom.textContent = "Lancement de l'application...";
+        }
     });
 
-  </script>
+</script>
 </body>
 
 </html>
