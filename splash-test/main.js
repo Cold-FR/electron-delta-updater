@@ -8,8 +8,9 @@ const downloadURL = 'https://github.com/electron-delta/electron-sample-app/relea
 
 let updaterWindow;
 app.on('ready', () => {
-  updaterWindow = getWindow();
+  updaterWindow = getWindow(true);
   updaterWindow.loadURL(getStartURL());
+  updaterWindow.webContents.send('darkMode', '');
 
   setTimeout(() => {
     console.log('checking for update');
