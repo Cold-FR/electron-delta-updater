@@ -13,4 +13,6 @@ process.once('loaded', () => {
   ipcRenderer.on(MAIN_MESSAGE, (event, data) => {
     window.dispatchEvent(new CustomEvent(MAIN_MESSAGE, { detail: data }));
   });
+
+  ipcRenderer.on('darkMode', () => document.body.classList.add('dark'));
 });

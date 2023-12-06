@@ -4,14 +4,14 @@ const url = require('url');
 
 const MAIN_MESSAGE = '@electron-delta/updater:main';
 
-const getWindow = () => new BrowserWindow({
-  width: 350,
-  height: 120,
+const getWindow = (darkMode = false) => new BrowserWindow({
+  width: 300,
+  height: 350,
   resizable: false,
   frame: false,
   show: true,
   titleBarStyle: 'hidden',
-  backgroundColor: '#f64f59',
+  backgroundColor: darkMode ? '#1F2333' : '#fff',
   fullscreenable: false,
   skipTaskbar: false,
   center: true,

@@ -211,8 +211,8 @@ class DeltaUpdater extends EventEmitter {
     }
   }
 
-  createSplashWindow() {
-    this.updaterWindow = getWindow();
+  createSplashWindow(darkMode = false) {
+    this.updaterWindow = getWindow(darkMode);
   }
 
   attachListeners(resolve, reject) {
@@ -373,7 +373,7 @@ class DeltaUpdater extends EventEmitter {
   }
 
   async boot({
-    splashScreen,
+    splashScreen, darkMode = false
   }) {
     this.logger.info('[Updater] Booting');
     if (!this.hostURL) {
@@ -382,8 +382,9 @@ class DeltaUpdater extends EventEmitter {
 
     if (splashScreen) {
       const startURL = getStartURL();
-      this.createSplashWindow();
+      this.createSplashWindow(darkMode);
       this.updaterWindow.loadURL(startURL);
+      if(darkMode) this.updaterWindow.webContents.send('darkMode', '');
     }
     return new Promise((resolve, reject) => {
       this.attachListeners(resolve, reject);
